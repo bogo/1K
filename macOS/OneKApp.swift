@@ -18,6 +18,11 @@ struct OneKApp: App {
                     $0.frame = NSRect(x: 0, y: 0, width: 525, height: 325)
                 }
             })
+            $0.addItem(
+                withTitle: "Quit",
+                action: #selector(Terminator.quitApp),
+                keyEquivalent: "Q"
+            ).target = Terminator.self
         }
 
         statusItem = with(NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)) {
