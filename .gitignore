@@ -1,0 +1,9 @@
+# macOS defaults
+.DS_Store
+Icon
+
+# Homebrew
+Brewfile.lock.json
+
+# Xcode
+*.xcodeproj/

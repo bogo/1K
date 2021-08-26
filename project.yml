@@ -1,0 +1,29 @@
+name: 1K
+
+fileGroups:
+  - README.md
+  - project.yml
+
+targets:
+  OneK:
+    platform: macOS
+    type: application
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: wtf.bogo.1k
+      PRODUCT_NAME: 1K
+    sources:
+      - macOS
+    dependencies:
+      - target: OneKit
+      - sdk: Foundation.framework
+      - sdk: SwiftUI.framework
+      - sdk: AppKit.framework
+  OneKit:
+    platform: macOS
+    type: framework
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: wtf.bogo.1kit
+    sources:
+      - OneKit
+    dependencies:
+      - sdk: Combine.framework
