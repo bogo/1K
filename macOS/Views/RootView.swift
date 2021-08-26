@@ -3,11 +3,11 @@ import OneKit
 import SwiftUI
 
 struct RootView: View {
-    var flight: Result<United, Error>?
+    @EnvironmentObject var state: AppState
 
     @ViewBuilder
     var flightView: some View {
-        switch flight {
+        switch state.flight {
         case let .success(flight): FlightView(flight: flight)
         case .failure: FlightView(flight: .Sample)
         case .none: ProgressView()

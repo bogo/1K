@@ -4,7 +4,7 @@ extension TimeInterval {
     private static let formatter = with(DateComponentsFormatter()) {
         $0.allowedUnits = [.hour, .minute]
         $0.unitsStyle = .positional
-        $0.zeroFormattingBehavior = .dropLeading
+        $0.zeroFormattingBehavior = .dropTrailing
     }
 
     /// - Returns: a representation of the time interval as hh:mm:ss
