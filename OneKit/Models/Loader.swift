@@ -1,12 +1,12 @@
 import Combine
 import Foundation
 
-public typealias FlightResult = Result<United, Error>
+public typealias FlightResult = Result<Lufthansa, Error>
 
-func fetchFlightInformation() -> AnyPublisher<United, Error> {
+func fetchFlightInformation<T: Codable>() -> AnyPublisher<T, Error> {
     URLSession.shared.dataTaskPublisher(for: United.Endpoint)
         .map(\.data)
-        .decode(type: United.self, decoder: JSONDecoder())
+        .decode(type: T.self, decoder: JSONDecoder())
         .eraseToAnyPublisher()
 }
 

@@ -7,7 +7,8 @@ class AppState: ObservableObject {
     init() {
         fetchFlightInformation(every: 15.0)
             .map { Optional($0) }
-            .receive(on: DispatchQueue.main)
+            .subscribe(on: RunLoop.main)
+            .print()
             .assign(to: &$flight)
     }
 }

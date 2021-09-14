@@ -2,7 +2,7 @@ import OneKit
 import SwiftUI
 
 struct FlightView: View {
-    var flight: United = .Sample
+    var flight: FlightViewModel = FlightViewModel(United.Sample)
 
     var body: some View {
         VStack(spacing: 15.0) {
@@ -109,7 +109,7 @@ struct FlightView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        FlightView(flight: .Sample)
+        FlightView(flight: FlightViewModel(United.Sample))
             .previewLayout(.fixed(width: 525, height: 375))
     }
 }

@@ -8,8 +8,8 @@ struct RootView: View {
     @ViewBuilder
     var flightView: some View {
         switch state.flight {
-        case let .success(flight): FlightView(flight: flight)
-        case .failure: FlightView(flight: .Sample)
+        case let .success(flight): FlightView(flight: FlightViewModel(flight))
+        case .failure: FlightView(flight: FlightViewModel(United.Sample))
         case .none: ProgressView()
         }
     }
