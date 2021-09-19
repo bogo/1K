@@ -94,6 +94,6 @@ public struct Lufthansa: Codable {
     }
 }
 
-extension Lufthansa {
+extension Lufthansa: Endpoint {
     static let Endpoint = URL(string: "http://services.inflightpanasonic.aero/inflight/services/flightdata/v1/flightdata")!
 }

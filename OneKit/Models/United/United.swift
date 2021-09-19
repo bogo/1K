@@ -10,7 +10,7 @@ public extension United {
     var flightTimeRemaining: String { TimeInterval(flifo.timeRemainingToDestination * 60).asString() }
 }
 
-extension United {
+extension United: Endpoint {
     static let Endpoint = URL(string: "https://www.unitedwifi.com/portal/r/getAllSessionData")!
 }
 
