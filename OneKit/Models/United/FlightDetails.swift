@@ -39,7 +39,7 @@ public extension United {
         public let scheduledArrivalTimeLocal: String
         public let scheduledDepartureTime: String
         public let scheduledDepartureTimeLocal: String
-        public let tailNumber: String
+        public let tailNumber: String?
         public let timeRemainingToDestination: Int
         public let windDirection: String
     }
