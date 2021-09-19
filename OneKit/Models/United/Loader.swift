@@ -16,5 +16,6 @@ public func fetchFlightInformation(every seconds: TimeInterval) -> AnyPublisher<
         .prepend(Date())
         .flatMap { _ in fetchFlightInformation() }
         .asResult()
+        .receive(on: DispatchQueue.main)
         .eraseToAnyPublisher()
 }

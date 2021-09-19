@@ -5,24 +5,40 @@ fileGroups:
   - project.yml
 
 targets:
-  OneK:
+  OneK macOS:
     platform: macOS
     type: application
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: wtf.bogo.1k
+      PRODUCT_BUNDLE_IDENTIFIER: wtf.bogo.1k-macOS
       PRODUCT_NAME: 1K
+      CODE_SIGN_ENTITLEMENTS: macOS.entitlements
     sources:
       - macOS
     dependencies:
-      - target: OneKit
+      - target: OneKit_macOS
       - sdk: Foundation.framework
       - sdk: SwiftUI.framework
       - sdk: AppKit.framework
+  OneK iOS:
+    platform: iOS
+    type: application
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: wtf.bogo.1k-iOS
+      PRODUCT_NAME: 1K
+      CODE_SIGN_ENTITLEMENTS: iOS.entitlements
+    sources:
+      - iOS
+    dependencies:
+      - target: OneKit_iOS
+      - sdk: Foundation.framework
+      - sdk: SwiftUI.framework
+      - sdk: UIKit.framework
   OneKit:
-    platform: macOS
+    platform: [iOS, macOS]
     type: framework
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: wtf.bogo.1kit
+      PRODUCT_NAME: OneKit
     sources:
       - OneKit
     dependencies:
