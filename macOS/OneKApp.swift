@@ -5,46 +5,60 @@ import SwiftUI
 
 @main
 struct OneKApp: App {
-    @StateObject var state: AppState = .init()
-    @State private var statusItem: NSStatusItem?
-
-    func setupStatusBar() {
-        let rootView = RootView()
-            .environmentObject(state)
-
-        let menu = with(NSMenu()) {
-            $0.addItem(with(NSMenuItem()) {
-                $0.view = with(NSHostingView(rootView: rootView)) {
-                    $0.frame = NSRect(x: 0, y: 0, width: 525, height: 325)
-                }
-            })
-            $0.addItem(
-                withTitle: "Quit",
-                action: #selector(Terminator.quitApp),
-                keyEquivalent: "Q"
-            ).target = Terminator.self
-        }
-
-        statusItem = with(NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)) {
-            $0.menu = menu
-            $0.button?.title = title()
-        }
-    }
-
-    func title(with time: String? = nil) -> String { "✈ \(time ?? "-:--")" }
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
-        WindowGroup {
-            ZStack {
-                EmptyView()
-            }
-            .hidden()
-            .onAppear {
-                setupStatusBar()
-            }
-            .onReceive(state.$flight) {
-                statusItem?.button?.title = title(with: try? $0?.get().flightTimeRemaining)
-            }
+        Settings {
+            EmptyView()
         }
     }
+}
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    let popover = NSPopover()
+    lazy var statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    
+    private var contentViewController: NSViewController {
+        let rootView = RootView().environmentObject(state)
+        let viewController = NSHostingController(rootView: rootView)
+        return viewController
+    }
+
+    private var state: AppState = .init()
+    private var bag = Set<AnyCancellable>()
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        configurePopover()
+        configureStatusItem()
+    }
+    
+    private func configurePopover() {
+        popover.contentSize = NSSize(width: 525, height: 375)
+        popover.behavior = .transient
+        popover.contentViewController = contentViewController
+    }
+    
+    private func configureStatusItem() {
+        statusItem.button?.title = AppDelegate.title()
+        statusItem.button?.action = #selector(togglePopover)
+        
+        state.$flight
+            .sink { self.statusItem.button?.title = AppDelegate.title(with: try?  $0?.get().flightTimeRemaining) }
+            .store(in: &bag)
+    }
+
+    static func title(with time: String? = nil) -> String { "✈ \(time ?? "-:--")" }
+    
+    @objc private func togglePopover() {
+        guard let button = statusItem.button else {
+            fatalError()
+        }
+        
+        if popover.isShown {
+            popover.performClose(button)
+        } else {
+            popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+        }
+    }
+    
 }
