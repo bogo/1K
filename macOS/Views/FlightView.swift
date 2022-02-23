@@ -31,6 +31,7 @@ struct FlightView: View {
                 flightTimeLeft: flight.flifo.timeRemainingToDestination,
                 flightTimeTotal: flight.flifo.flightDurationMinutes
             )
+                .animation(.easeIn, value: flight.flifo.timeRemainingToDestination)
 
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {

@@ -16,7 +16,6 @@ struct RootView: View {
 
     var body: some View {
         flightView
-            .animation(.easeIn)
             .frame(width: 525, height: 375, alignment: .center)
     }
 }
